@@ -63,12 +63,20 @@ function xxx(n,s)
 end
 
 function zencode:begin(verbosity)
-   if verbosity > 0 then
-      self.verbosity = verbosity
-      xxx(2,"Zencode debug verbosity: "..verbosity)
-   end
-   self.current_step = self.given_steps
-   return true
+    _G['ZEN_traceback'] = ""
+    self.verbosity = verbosity
+    if verbosity > 0 then
+        xxx(2,"Zencode debug verbosity: "..verbosity)
+    end
+    self.current_step = self.given_steps
+    self.OK = true
+    return true
+end
+
+function zencode:reset()
+    self.id = 0
+    self.matches = {}
+    self.schemas = {}
 end
 
 function zencode:step(text)
@@ -184,6 +192,7 @@ function zencode:run(data, keys)
    --    print(JSON.encode(OUT))
    --    self:trace(">>> Encoding successful")
    -- end
+   return OUT
 end
 
 function zencode:assert(condition, errmsg)
