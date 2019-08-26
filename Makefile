@@ -1,8 +1,9 @@
 SRC_PATH := src
+EXAMPLE_PATH := examples
 
-EXAMPLES = $(wildcard examples/*.lua)
+EXAMPLES = $(wildcard $(EXAMPLE_PATH)/*.lua)
 
-LUA_PATH_EXT := $(SRC_PATH)/?.lua; # $(TARGET_PATH)/?.so
+LUA_PATH_EXT := $(SRC_PATH)/?.lua;$(EXAMPLE_PATH)/lib/?.lua#;$(TARGET_PATH)/?.so
 ifeq ($(LUA_PATH),)
 	LUA_PATH := $(LUA_PATH_EXT)
 else

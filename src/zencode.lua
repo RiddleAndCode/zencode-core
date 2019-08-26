@@ -103,8 +103,8 @@ function zencode:step(text)
       defs = self.current_step
       local scenario = string.match(text, "'(.-)'")
       if scenario ~= "" then
-         require("zencode_"..scenario)
-         self:trace("|   Scenario "..scenario)
+          load_scenario(scenario)
+          self:trace("|   Scenario "..scenario)
       end
    else -- defs = nil end
         -- if not defs then
@@ -140,7 +140,6 @@ function zencode:step(text)
       end
    end
 end
-
 
 -- returns an iterator for newline termination
 function zencode:newline_iter(text)
@@ -199,6 +198,12 @@ function zencode:assert(condition, errmsg)
    if condition then return true end
    self:trace("ERR "..errmsg)
    self.OK = false
+end
+
+if _G["load_scenario"] == nil then
+    _G["load_scenario"] = function(scenario)
+        return require("zencode_"..scenario)
+    end
 end
 
 _G["Given"] = function(text, fn)
