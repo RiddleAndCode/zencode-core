@@ -150,9 +150,6 @@ end
 
 -- TODO: improve parsing for strings starting with newline, missing scenarios etc.
 function zencode:parse(text)
-   if  #text < 16 then
-      warn("Zencode text too short to parse")
-      return false end
    for line in self:newline_iter(text) do
       self:step(line)
    end
