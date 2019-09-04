@@ -1,3 +1,57 @@
+-- This file is part of Zenroom (https://zenroom.dyne.org)
+--
+-- Copyright (C) 2018-2019 Dyne.org foundation
+-- designed, written and maintained by Denis Roio <jaromil@dyne.org>
+--
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU Affero General Public License as
+-- published by the Free Software Foundation, either version 3 of the
+-- License, or (at your option) any later version.
+--
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU Affero General Public License for more details.
+--
+-- You should have received a copy of the GNU Affero General Public License
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+--- <h1>Zencode language parser</h1>
+--
+-- Zencode is a <a
+-- href="https://en.wikipedia.org/wiki/Domain-specific_language">Domain
+-- Specific Language (DSL)</a> made to be understood by humans and
+-- inspired by <a
+-- href="https://en.wikipedia.org/wiki/Behavior-driven_development">Behavior
+-- Driven Development (BDD)</a> and <a
+-- href="https://en.wikipedia.org/wiki/Domain-driven_design">Domain
+-- Driven Design (DDD)</a>.
+--
+-- The Zenroom VM is capable of parsing specific scenarios written in
+-- Zencode and execute high-level cryptographic operations described
+-- in them; this is to facilitate the integration of complex
+-- operations in software and the non-literate understanding of what a
+-- distributed application does. A generic Zencode looks like this:
+--
+-- <code>
+-- Given that I am known as 'Alice'
+--
+-- When I create my new keypair
+--
+-- Then print my data
+-- </code>
+--
+-- This section doesn't provide the documentation on how to write
+-- Zencode, but illustrates the internals on how the Zencode parser is
+-- made and how it integrates with the Zenroom memory model. It serves
+-- as a reference documentation on functions used to write parsers for
+-- new Zencode scenarios in Zenroom's Lua.
+--
+--  @module ZEN
+--  @author Denis "Jaromil" Roio
+--  @license AGPLv3
+--  @copyright Dyne.org foundation 2018-2019
+
 _G['ZEN_traceback'] = ""
 
 local zencode = {
@@ -24,13 +78,6 @@ function sort_ipairs(t)
       end
    end
    return iter
-end
-
--- TODO remove (here for debugging)
-function tablelength(T)
-  local count = 0
-  for _ in pairs(T) do count = count + 1 end
-  return count
 end
 
 -- TODO slow implementation (was originally in c)
