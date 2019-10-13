@@ -217,7 +217,7 @@ function zencode:run(data, keys)
    OUT = {}
    for i,x in sort_ipairs(self.matches) do
       if data then IN = data else IN = {} end
-      if keys then IN.KEYS = keys else IN.KEYS = {} end
+      if keys then IN_KEYS = keys else IN_KEYS = {} end
       self:trace("->  "..trim(x.source))
       local ok, err = pcall(x.hook,table.unpack(x.args))
       if not ok then
@@ -261,6 +261,7 @@ _G["Then"] = function(text, fn)
 end
 
 _G["IN"] = {}
+_G["IN_KEYS"] = {}
 _G["ACK"] = {}
 _G["OUT"] = {}
 
